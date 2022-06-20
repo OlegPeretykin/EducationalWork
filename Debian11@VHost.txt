@@ -44,3 +44,39 @@ sudo systemctl enable containerd.service
 
 ***** Делаем docker-compose.yml
 
+version: '3.3'
+services:
+
+  ztncui-aio:
+    container_name: ztncui-aio
+    image: keynetworks/ztncui
+    restart: always
+    environment:
+      HTTPS_PORT: '3443'
+      MYDOMAIN: ztncui.docker.test
+      NODE_ENV: production
+      ZTNCUI_PASSWD: password
+    ports:
+      - published: 3443
+        target: 3443
+      - published: 3180
+        target: 3180
+    volumes:
+      - ./zt/data/ztncui:/opt/key-networks/ztncui/etc:rw
+      - ./zt/zt1:/var/lib/zerotier-one:rw
+
+  postgres:
+    container_name: postgres-14-3
+    image: postgres:14.3
+    restart: always
+    environment:
+      POSTGRES_USER: "testtest"
+      POSTGRES_PASSWORD: "testtest"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    ports:
+      - "10.10.10.115:5432:5432"
+    volumes:
+      - ./pg14.3/2. Init Database:/docker-entrypoint-initdb.d
+      - ./pg14.3:/var/lib/postgresql/data
+	  
+*****
