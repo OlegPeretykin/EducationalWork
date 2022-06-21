@@ -80,3 +80,29 @@ services:
       - ./pg14.3:/var/lib/postgresql/data
 	  
 *****
+------------------------------------------
+Теперь делаем сервер видеоконференций TrueConf
+
+*****
+version: '3.3'
+services:
+
+  trueconfserver:
+    container_name: trueconfserver
+    image: trueconf/trueconf-server:stable
+    restart: always
+    environment:
+      ADMIN_USER: 'admin'
+      ADMIN_PASSWORD: 'admin'
+      ServerID: 'UA93B'
+      Serial: 'HT8I-6NHX-5B8P'
+      ServerName: 'video.maestro'
+    ports:
+      - '10.10.10.115:80:80'
+      - '10.10.10.115:443:443'
+      - '10.10.10.115:4307:4307'
+      - '10.10.10.115:53000-55000:53000-55000/udp'
+    volumes: 
+      - ./server:/opt/trueconf/server/var/lib
+*****
+-------------------------
