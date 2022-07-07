@@ -21,3 +21,6 @@
     text-indent: 50px;
 }
 
+div:hover{
+    text-decoration: underline;
+}
